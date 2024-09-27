@@ -106,7 +106,7 @@
 	<haxedef name="openflPos" />
 
 	<!--haxelib name="flixel-screenshot-plugin" /-->
-	<haxelib name="flixel-shadertoy-shader-lr" />
+	<!--haxelib name="flixel-shadertoy-shader-lr" /-->
 
 	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
@@ -131,7 +131,6 @@
 	<haxedef name='no-deprecation-warnings' />
 
 	<haxeflag name="--macro" value="allowPackage('flash')" />
-	<!--haxeflag name="--macro" value="include('gg.bb')" /-->
 
 	<haxeflag name="-dce" value="no" />
 
