@@ -43,8 +43,8 @@ import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxObject;
-// import flixel.FlxSprite;
-// import flixel.FlxCamera;
+import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.util.FlxSave;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
@@ -100,13 +100,18 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 #if VIDEOS_ALLOWED
-#if (hxCodec >= "2.6.1")
+
+#if (hxCodec >= "3.0.0")
+import hxcodec.flixel.FlxVideo;
+import hxcodec.flixel.FlxVideoSprite;
+#elseif (hxCodec >= "2.6.1")
 import hxcodec.VideoHandler as MP4Handler;
 #elseif (hxCodec == "2.6.0")
 import VideoHandler as MP4Handler;
 #else
 import vlc.MP4Handler;
 #end
+
 #end
 #if desktop
 import external.Discord.DiscordClient;
@@ -271,10 +276,16 @@ class PlayState extends MusicBeatState
 
 	public var classicHealthBar:Bool = false;
 
-	public var camGame:FixedCamera;
-	public var camHUD:FixedCamera;
+	public var camGame:FlxCamera;
+	public var camHUD:FlxCamera;
 	public var camPAUSE:FlxCamera;
 	public var camOther:FlxCamera;
+
+	var noteCam:Bool = true;
+
+	public var camNoteX:Float = 0;
+	public var camNoteY:Float = 0;
+	public var camNoteExtend:Float = 15; // How powerful the camnote stuff is
 
 	public var cameraSpeed:Float = 1;
 
@@ -370,8 +381,6 @@ class PlayState extends MusicBeatState
 	public var girlfriendCameraOffset:Array<Float> = null;
 
 	public var ratingsCameraOffset:Array<Float> = null;
-
-	public var cameraMoveOffset:Float = 10;
 
 	public var camCharsPositions:Map<String, Array<Float>> = new Map<String, Array<Float>>();
 
@@ -608,8 +617,6 @@ class PlayState extends MusicBeatState
 
 		if (stageBuild.exist)
 			add(stageBuild);
-
-		setOnLuas('cameraMoveOffset', cameraMoveOffset);
 
 		switch (curStage)
 		{
@@ -1636,8 +1643,8 @@ class PlayState extends MusicBeatState
 		}
 
 		playbackRate = value;
-		FlxG.animationTimeScale = value;
-		trace('Anim speed: ' + FlxG.animationTimeScale);
+		//FlxG.animationTimeScale = value;
+		//trace('Anim speed: ' + FlxG.animationTimeScale);
 		Conductor.safeZoneOffset = (ClientPrefs.safeFrames / 60) * 1000 * value;
 		setOnLuas('playbackRate', playbackRate);
 		return value;
@@ -3345,6 +3352,10 @@ class PlayState extends MusicBeatState
 
 		if (generatedMusic && !inCutscene)
 		{
+			if (generatedMusic && !endingSong && !isCameraOnForcedPos)
+			{
+				moveCameraSection();
+			}
 			if (!cpuControlled)
 			{
 				keysCheck();
@@ -4003,7 +4014,6 @@ class PlayState extends MusicBeatState
 				{
 					camFollow.x = val1;
 					camFollow.y = val2;
-					camGame.targetOffset.set(0, 0);
 					isCameraOnForcedPos = true;
 					isEventWorking = true;
 				}
@@ -4435,7 +4445,15 @@ class PlayState extends MusicBeatState
 		getCamOffsets();
 		camFollow.x = camCharsPositions.get(char)[0];
 		camFollow.y = camCharsPositions.get(char)[1];
-		camGame.targetOffset.set(0, 0);
+		
+		switch (char){
+			case 'bf': noteCamera(boyfriend, true);
+			case 'dad': noteCamera(dad, false);
+        }
+
+		camFollow.x += camNoteX;
+		camFollow.y += camNoteY;
+
 		call('onMoveCamera', [char]);
 		callOnLuas('onMoveCamera', [char]);
 		callOnHscript("onMoveCamera", [char]);
@@ -5208,9 +5226,6 @@ class PlayState extends MusicBeatState
 			char.playAnim(char.singAnimsPrefix + animToPlay, true);
 		}
 
-		if (camFocus != 'dad' && ClientPrefs.shouldCameraMove && (!daNote.noAnimation || daNote.specialNote))
-			triggerCamMovement(daNote.noteData);
-
 		call('noteMiss', [
 			daNote,
 			daNote.noteData,
@@ -5348,9 +5363,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (camFocus != 'bf' && ClientPrefs.shouldCameraMove && (!note.noAnimation || note.specialNote))
-			triggerCamMovement(note.noteData);
-
 		if (SONG.needsVoices)
 		{
 			vocals.volume = 1;
@@ -5476,8 +5488,6 @@ class PlayState extends MusicBeatState
 		var isSus:Bool = note.isSustainNote; // GET OUT OF MY HEAD, GET OUT OF MY HEAD, GET OUT OF MY HEAD
 		var leData:Int = note.noteData;
 		var leType:String = note.noteType;
-		if (camFocus != 'dad' && ClientPrefs.shouldCameraMove && (!note.noAnimation || note.specialNote))
-			triggerCamMovement(note.noteData);
 
 		if (cpuControlled)
 		{
@@ -5615,99 +5625,7 @@ class PlayState extends MusicBeatState
 		toAddArray.reverse();
 		startStuff();
 	}
-	/*dynamic function spawnComboSprites(comboCol:Int)
-	{
-		if (comboCol < 7)
-			return;
-
-		final coolPos = FlxPoint.get(FlxMath.lerp(dad.x + dad.width, boyfriend.x, .5), FlxMath.lerp(dad.getGraphicMidpoint().y, boyfriend.getGraphicMidpoint().y, .5));
-		final spritesToCreate = [];
-
-		final comboSprite:FlxSprite = new FlxSprite();
-		comboSprite.frames = Paths.getSparrowAtlas(comboPath + 'AMnotecombo');
-		if (comboSprite.frames != null)
-		{
-			final universalValue = 1 - camGame.zoom * .72;
-			comboSprite.animation.addByPrefix('anim', "note combo", 14, false);
-			comboSprite.scale.set(universalValue, universalValue);
-			comboSprite.updateHitbox();
-			comboSprite.antialiasing = ClientPrefs.globalAntialiasing;
-			comboSprite.scrollFactor.set(universalValue, universalValue);
-			comboSprite.alpha = 0.9;
-			comboSprite.x = coolPos.x - comboSprite.width/ 2 / universalValue;
-			comboSprite.y = coolPos.y - comboSprite.height/ 2 / universalValue;
-			spritesToCreate.push(comboSprite);
-
-			comboSprite.x += ratingsCameraOffset[2];
-			comboSprite.y += ratingsCameraOffset[3];
-		}
-
-
-		final seperatedScore:Array<Int> = [];
-		if (comboCol >= 1000) seperatedScore.push(Math.floor(comboCol / 1000) % 10);
-		if (comboCol >= 100) seperatedScore.push(Math.floor(comboCol / 100) % 10);
-		if (comboCol >= 10) seperatedScore.push(Math.floor(comboCol / 10) % 10);
-
-		seperatedScore.push(comboCol % 10);
-
-		var daLoop:Int = 0;
-		for (i in seperatedScore)
-		{
-			var funnyNum:FlxSprite = new FlxSprite();
-			funnyNum.frames = Paths.getSparrowAtlas(comboPath + 'AMnotecombo_numbers');
-			if (funnyNum.frames != null)
-			{
-				final universalValue = 1 - camGame.zoom * .72;
-				funnyNum.animation.addByPrefix('anim', 'combo ' + numbersHaha[Std.int(i)], 10, false);
-				funnyNum.antialiasing = ClientPrefs.globalAntialiasing;
-				funnyNum.scale.set(universalValue, universalValue);
-				funnyNum.updateHitbox();
-				funnyNum.scrollFactor.set(universalValue, universalValue);
-				funnyNum.x = (coolPos.x * .725 - funnyNum.width/ 2 / universalValue) + funnyNum.width * -(seperatedScore.length-2);
-				funnyNum.y = (coolPos.y * .775 - funnyNum.height/ 2 / universalValue);
-				funnyNum.offset.set(-funnyNum.width * daLoop * .9, funnyNum.width / 2 * daLoop * .9);
-				spritesToCreate.push(funnyNum);
-
-				funnyNum.x += ratingsCameraOffset[2];
-				funnyNum.y += ratingsCameraOffset[3];
-			}
-
-			daLoop++;
-		}
-
-
-		var startStuff:Void->Void = function()
-		{
-			var loop:Int = 0;
-			for (ss in spritesToCreate) {
-				ss.visible = (!ClientPrefs.hideHud && (showCombo || showComboNum));
-				if (ss == comboSprite) {
-					insert(members.indexOf(strumLineNotes) + loop, ss);
-					ss.animation.play('anim', true);
-					ss.animation.finishCallback = function(name)
-					{
-						ss.kill();
-						remove(ss, true);
-					}
-				} else {
-					startTimer = new FlxTimer().start(Conductor.crochet / 3000 / playbackRate, function(tmr:FlxTimer)
-					{
-						insert(members.indexOf(strumLineNotes) + loop, ss);
-						ss.animation.play('anim', true);
-						ss.animation.finishCallback = function(name)
-						{
-							ss.kill();
-							remove(ss, true);
-						}
-					});
-				}
-				loop++;
-			}	
-		}
-
-		startStuff();
-	}*/
-
+	
 	public function spawnNoteSplashOnNote(note:Note, ?char:String = 'bf')
 	{
 		if (char == 'dad' && !ClientPrefs.lightCpuStrums)
@@ -5757,8 +5675,8 @@ class PlayState extends MusicBeatState
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		if (note != null)
 		{
-			splash.scrollFactor.set(note?.scrollFactor?.x ?? 0, note.scrollFactor?.y ?? 0);
-			splash.alpha *= note?.alpha ?? 1;
+			splash.scrollFactor.set(note.scrollFactor.x, note.scrollFactor.y);
+			splash.alpha *= note.alpha;
 		}
 		grpNoteSplashes.add(splash);
 	}
@@ -5962,7 +5880,7 @@ class PlayState extends MusicBeatState
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			FlxG.stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
-		FlxG.animationTimeScale = 1;
+		//FlxG.animationTimeScale = 1;
 		FlxG.sound.music.pitch = 1;
 		FlxG.mouse.visible = true;
 		FlxG.mouse.load(Paths.image("cursor").bitmap, 1, 0, 0);
@@ -6130,10 +6048,6 @@ class PlayState extends MusicBeatState
 
 		if (SONG.notes[curSection] != null)
 		{
-			if (generatedMusic && !endingSong && !isCameraOnForcedPos)
-			{
-				moveCameraSection();
-			}
 
 			if (SONG.notes[curSection].changeBPM)
 			{
@@ -6498,29 +6412,34 @@ class PlayState extends MusicBeatState
 	var bfPos:Array<Float> = [0, 0];
 	var gfPos:Array<Float> = [0, 0];
 
-	public dynamic function triggerCamMovement(num:Int = 0)
+	private function noteCamera(focusedChar:Character, mustHit:Bool)
 	{
-		call("onTriggerCamMovement", [camFocus, num]);
-		callOnLuas("onTriggerCamMovement", [camFocus, num]);
-		callOnHscript("onTriggerCamMovement", [camFocus, num]);
-		stageBuild.callFunction('onTriggerCamMovement', [camFocus, num]);
-
-		if (PlayState.NotesCanMoveCam && !isEventWorking && camCharsPositions.exists(camFocus))
-			switch (num)
+		if (noteCam)
+		{
+			if ((focusedChar == boyfriend && mustHit) || (focusedChar == dad && !mustHit))
 			{
-				case 2:
-					camGame.targetOffset.y = -cameraMoveOffset * camGame.zoom / defaultCamZoom;
-					camGame.targetOffset.x = 0;
-				case 3:
-					camGame.targetOffset.x = cameraMoveOffset * camGame.zoom / defaultCamZoom;
-					camGame.targetOffset.y = 0;
-				case 1:
-					camGame.targetOffset.y = cameraMoveOffset * camGame.zoom / defaultCamZoom;
-					camGame.targetOffset.x = 0;
-				case 0:
-					camGame.targetOffset.x = -cameraMoveOffset * camGame.zoom / defaultCamZoom;
-					camGame.targetOffset.y = 0;
+				camNoteX = 0;
+				if (focusedChar.animation.curAnim.name.startsWith('singLEFT'))
+					camNoteX -= camNoteExtend;
+				if (focusedChar.animation.curAnim.name.startsWith('singRIGHT'))
+					camNoteX += camNoteExtend;
+				if (focusedChar.animation.curAnim.name.startsWith('idle'))
+					camNoteX = 0;
+
+				camNoteY = 0;
+				if (focusedChar.animation.curAnim.name.startsWith('singDOWN'))
+					camNoteY += camNoteExtend;
+				if (focusedChar.animation.curAnim.name.startsWith('singUP'))
+					camNoteY -= camNoteExtend;
+				if (focusedChar.animation.curAnim.name.startsWith('idle'))
+					camNoteY = 0;
 			}
+		}
+		else
+		{
+			camNoteY = 0;
+			camNoteX = 0;
+		}
 	}
 
 	dynamic function getCamOffsets()
@@ -6532,12 +6451,14 @@ class PlayState extends MusicBeatState
 		bfPos[0] = boyfriend.getMidpoint().x - 100 - boyfriend.cameraPosition[0] + boyfriendCameraOffset[0];
 		bfPos[1] = boyfriend.getMidpoint().y - 100 + boyfriend.cameraPosition[1] + boyfriendCameraOffset[1];
 		camCharsPositions.set('bf', [bfPos[0], bfPos[1]]);
+
 		if (!stageData.hide_girlfriend)
 		{
 			gfPos[0] = gf.getMidpoint().x + gf.cameraPosition[0] + girlfriendCameraOffset[0];
 			gfPos[1] = gf.getMidpoint().y + gf.cameraPosition[1] + girlfriendCameraOffset[1];
 			camCharsPositions.set('gf', [gfPos[0], gfPos[1]]);
 		}
+
 		call('onGetCamOffsets', []);
 		callOnLuas('onGetCamOffsets', []);
 		stageBuild.callFunction('onGetCamOffsets', []);
@@ -6561,13 +6482,25 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var video:MP4Handler = new MP4Handler();
-		video.playVideo(filepath);
+		#if (hxCodec <= "3.0.0") var video:MP4Handler = new MP4Handler(); 
+		#else var video:FlxVideo = new FlxVideo();
+		#end
+		#if (hxCodec <= "3.0.0") video.playVideo(filepath);
+		#else video.play(filepath);
+		#end
+		#if (hxCodec <= "3.0.0")
 		video.finishCallback = function()
 		{
 			startAndEnd();
 			return;
 		}
+		#else
+		video.onEndReached.add(function()
+        {
+            startAndEnd();
+            return;
+        });
+        #end
 		#else
 		FlxG.log.warn('Platform not supported!');
 		startAndEnd();
