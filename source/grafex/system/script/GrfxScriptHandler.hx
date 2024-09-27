@@ -220,8 +220,6 @@ class GrfxModule
 		set("ScriptedState", ScriptedState);
 		set("ScriptedSubState", ScriptedSubState);
 
-		set("ParallaxSprite", ParallaxSprite);
-
 		set('FlxColor', CustomFlxColor.instance);
 		set('BlendMode', CustomBlendMode);
 
@@ -234,7 +232,6 @@ class GrfxModule
 
 		#if !flash
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
-		set('FlxShaderToyRuntimeShader', shadertoy.FlxShaderToyRuntimeShader);
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('GrfxShader', GrfxShader);
 		#end
@@ -775,7 +772,6 @@ class GrfxStateModule
 		set("ScriptedState", ScriptedState);
 		set("ScriptedSubState", ScriptedSubState);
 
-		set("ParallaxSprite", ParallaxSprite);
 
 		set('FlxColor', CustomFlxColor.instance);
 		set('BlendMode', CustomBlendMode);
@@ -789,7 +785,6 @@ class GrfxStateModule
 
 		#if !flash
 		set('FlxRuntimeShader', flixel.addons.display.FlxRuntimeShader);
-		set('FlxShaderToyRuntimeShader', shadertoy.FlxShaderToyRuntimeShader);
 		set('ShaderFilter', openfl.filters.ShaderFilter);
 		set('GrfxShader', GrfxShader);
 		#end
