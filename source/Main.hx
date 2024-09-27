@@ -179,8 +179,8 @@ class Main extends Sprite
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
 			   for (cam in FlxG.cameras.list) {
-				//@:privateAccess
-				if (cam != null && cam.filters != null)
+				@:privateAccess
+				if (cam != null && cam._filters != null)
 					resetSpriteCache(cam.flashSprite);
 			   }
 		     }
