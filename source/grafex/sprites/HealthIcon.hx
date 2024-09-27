@@ -177,7 +177,7 @@ class HealthIcon extends FlxSprite
 	var game = PlayState.instance;
 	public dynamic function updateScale(?elapsed:Float = null, ?playbackRate:Float = null)
 	{
-		var mult:Float = FlxMath.lerp(customScale, scale.x, Utils.boundTo(1 - ((elapsed ?? FlxG.elapsed) * 9 * (playbackRate ?? game.playbackRate)), 0, 1));
+		var mult:Float = FlxMath.lerp(customScale, scale.x, Utils.boundTo(1 - ((FlxG.elapsed) * 9 * (playbackRate)), 0, 1));
 		scale.set(mult, mult);
 		updateHitbox();
 	}
