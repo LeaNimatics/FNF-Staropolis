@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Leanimatics.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="LéaIdle0000" x="0" y="0" width="832" height="705" frameX="0" frameY="-8" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0001" x="0" y="0" width="832" height="705" frameX="0" frameY="-8" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0002" x="832" y="0" width="832" height="706" frameX="0" frameY="-7" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0003" x="832" y="0" width="832" height="706" frameX="0" frameY="-7" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0004" x="1664" y="0" width="832" height="710" frameX="0" frameY="-3" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0005" x="1664" y="0" width="832" height="710" frameX="0" frameY="-3" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0006" x="2496" y="0" width="832" height="711" frameX="0" frameY="-2" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0007" x="2496" y="0" width="832" height="711" frameX="0" frameY="-2" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0008" x="0" y="711" width="832" height="712" frameX="0" frameY="-1" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0009" x="0" y="711" width="832" height="712" frameX="0" frameY="-1" frameWidth="832" frameHeight="713"/>
+	<SubTexture name="LéaIdle0010" x="832" y="711" width="832" height="713"/>
+	<SubTexture name="LéaIdle0011" x="832" y="711" width="832" height="713"/>
+	<SubTexture name="LéaIdle0012" x="832" y="711" width="832" height="713"/>
+	<SubTexture name="LéaIdle0013" x="832" y="711" width="832" height="713"/>
+	<SubTexture name="LéaIdle0014" x="832" y="711" width="832" height="713"/>
+</TextureAtlas>

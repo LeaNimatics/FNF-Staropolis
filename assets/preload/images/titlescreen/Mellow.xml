@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Mellow.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="IdleMellow0000" x="0" y="0" width="628" height="766" frameX="0" frameY="-10" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0001" x="0" y="0" width="628" height="766" frameX="0" frameY="-10" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0002" x="628" y="0" width="626" height="766" frameX="-1" frameY="-10" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0003" x="628" y="0" width="626" height="766" frameX="-1" frameY="-10" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0004" x="1254" y="0" width="626" height="769" frameX="-1" frameY="-7" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0005" x="1254" y="0" width="626" height="769" frameX="-1" frameY="-7" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0006" x="1880" y="0" width="626" height="775" frameX="-1" frameY="-1" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0007" x="1880" y="0" width="626" height="775" frameX="-1" frameY="-1" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0008" x="2506" y="0" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0009" x="2506" y="0" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0010" x="0" y="776" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0011" x="0" y="776" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0012" x="0" y="776" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0013" x="0" y="776" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+	<SubTexture name="IdleMellow0014" x="0" y="776" width="626" height="776" frameX="-1" frameY="0" frameWidth="628" frameHeight="776"/>
+</TextureAtlas>

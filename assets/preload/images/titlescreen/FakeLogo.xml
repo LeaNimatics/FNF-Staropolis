@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="FakeLogo.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="FakeLogoIdle0000" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0001" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0002" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0003" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0004" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0005" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0006" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0007" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0008" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0009" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0010" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0011" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+	<SubTexture name="FakeLogoIdle0012" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0013" x="0" y="0" width="1398" height="471"/>
+	<SubTexture name="FakeLogoIdle0014" x="0" y="471" width="1396" height="467" frameX="-2" frameY="0" frameWidth="1398" frameHeight="471"/>
+</TextureAtlas>

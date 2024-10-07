@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Enter.png">
+	<!-- Created with Adobe Animate version 22.0.5.191 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="EnterIdle0000" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0001" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0002" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0003" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0004" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0005" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0006" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0007" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0008" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0009" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0010" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0011" x="383" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0012" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0013" x="0" y="0" width="383" height="288"/>
+	<SubTexture name="EnterIdle0014" x="383" y="0" width="383" height="288"/>
+</TextureAtlas>
