@@ -83,15 +83,14 @@ class StoryMenuState extends MusicBeatState
 		if(curWeek >= WeekData.weeksList.length) curWeek = 0;
 		persistentUpdate = persistentDraw = true;
 
-		if(FlxG.sound.music != null)
+		if(FlxG.sound.music != null){
 			if (!FlxG.sound.music.playing)
 			{	
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.7);
         		FlxG.sound.music.time = 9400;
-				TitleState.titleJSON = TitleState.getTitleData();
-				Conductor.changeBPM(TitleState.titleJSON.bpm);
+				Conductor.changeBPM(102);
 			}
-
+		}
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 49324858", 36);
 		scoreText.setFormat("VCR OSD Mono", 32);

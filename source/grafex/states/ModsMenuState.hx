@@ -88,14 +88,13 @@ class ModsMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
 
-		if(FlxG.sound.music != null)
+		if(FlxG.sound.music != null){
 			if (!FlxG.sound.music.playing)
 			{	
 				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0.7);
-				TitleState.titleJSON = TitleState.getTitleData();
-				Conductor.changeBPM(TitleState.titleJSON.bpm);
+				Conductor.changeBPM(102);
 			}
-
+		}
 		
 		noModsTxt = new Alphabet(0, 300, "NO MODS INSTALLED", true, false, 0.05, 0.66);
 		noModsTxt.screenCenter(X);

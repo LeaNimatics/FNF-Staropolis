@@ -153,11 +153,6 @@ class MainMenuState extends MusicBeatState
 
 	var selectedSomethin:Bool = false;
 
-    public function updateGameBpm() {
-		TitleState.titleJSON = TitleState.getTitleData();
-		Conductor.changeBPM(TitleState.titleJSON.bpm);
-    }
-
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);

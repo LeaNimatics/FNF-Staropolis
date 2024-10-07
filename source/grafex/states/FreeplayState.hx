@@ -75,8 +75,6 @@ class FreeplayState extends MusicBeatState
 	var forMouseClick:FlxTimer = null;
 	var acceptedSong:Bool = false;
 
-	var camZoom:FlxTween;
-
 	override function create()
 	{
 		trace('Switched state to: ' + Type.getClassName(Type.getClass(this)));
@@ -213,8 +211,6 @@ class FreeplayState extends MusicBeatState
 		
 		changeSelection();
 		changeDiff();
-
-		camZoom = FlxTween.tween(this, {}, 0);
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
 
@@ -524,39 +520,12 @@ class FreeplayState extends MusicBeatState
 	    }
 	}
 
-	override function beatHit()
-	{
-		super.beatHit();
-
-		if (!acceptedSong) bopOnBeat();
-	}
-
 	override function sectionHit()
 	{
 		super.sectionHit();
 
 		if (PlayState.SONG.notes[curSection] != null && PlayState.SONG.notes[curSection].changeBPM)
 			Conductor.changeBPM(PlayState.SONG.notes[curSection].bpm);
-	}
-
-	function bopOnBeat()
-	{
-		FlxG.camera.zoom += 0.015;
-		camZoom = FlxTween.tween(FlxG.camera, {zoom: 1}, 0.15);
-
-		freeplayinstPlaying >= 0 ? {
-			if (Math.abs(FlxG.sound.music.time - (Conductor.songPosition - Conductor.offset)) > 20 || (PlayState.SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > 20))
-				resyncVocals();
-
-			//iconArray[freeplayinstPlaying].doIconSize();
-			//iconArray[freeplayinstPlaying].doIconAnim(); //Reasons - PurSnake
-		} : {
-			/*for (i in 0...iconArray.length)
-			{
-				iconArray[i].doIconSize();
-				iconArray[i].doIconAnim(); //Reasons - PurSnake
-			}*/
-		}
 	}
 	
 	public static function destroyFreeplayVocals() {
