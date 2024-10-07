@@ -243,11 +243,6 @@ class TitleState extends MusicBeatState
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
 
-		if (mellow != null){
-			FlxG.watch.addQuick("mellow.x", mellow.x);
-			FlxG.watch.addQuick("mellow.y", mellow.y);
-		}
-
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
 		#if mobile
