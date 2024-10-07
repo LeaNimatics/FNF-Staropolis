@@ -281,7 +281,7 @@ class PlayState extends MusicBeatState
 	public var camPAUSE:FlxCamera;
 	public var camOther:FlxCamera;
 
-	var noteCam:Bool = true;
+	var noteCam:Bool = ClientPrefs.shouldCameraMove;
 
 	public var camNoteX:Float = 0;
 	public var camNoteY:Float = 0;
@@ -4576,8 +4576,7 @@ class PlayState extends MusicBeatState
 				if (storyPlaylist.length <= 0)
 				{
 					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					TitleState.titleJSON = TitleState.getTitleData();
-					Conductor.changeBPM(TitleState.titleJSON.bpm);
+					Conductor.changeBPM(100);
 
 					cancelMusicFadeTween();
 					/*CustomFadeTransition.nextCamera = camOther;
@@ -4632,8 +4631,7 @@ class PlayState extends MusicBeatState
 				}*/
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
-				TitleState.titleJSON = TitleState.getTitleData();
-				Conductor.changeBPM(TitleState.titleJSON.bpm);
+				Conductor.changeBPM(100);
 				changedDifficulty = false;
 				WeekData.loadTheFirstEnabledMod();
 			}
